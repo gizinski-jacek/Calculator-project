@@ -1,0 +1,47 @@
+body, body * {
+    font-family: Arial, sans-serif;
+}
+
+#mainContainer {
+    display: flex;
+    justify-content: center;
+}
+
+#calculator {
+    width: 400px;
+    height: 500px;
+    display: grid;
+    margin-top: 100px;
+    grid-template-areas: 
+    'display display display display'
+    'clear div mult sub'
+    'nbr nbr nbr add'
+    'nbr nbr nbr sum'
+    'nbr nbr nbr sum'
+    'zero zero comma sum';
+    background-color: blueviolet;
+    padding: 5px;
+}
+
+button {
+    margin: 5px;
+    width: auto;
+    height: auto;
+}
+
+#display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: display;
+    min-height: 50px;
+}
+#clear {grid-area: clear;}
+#div {grid-area: div;}
+#mult {grid-area: mult;}
+#sub {grid-area: sub;}
+#add {grid-area: add;}
+#sum {grid-area: sum;}
+#comma {grid-area: comma;}
+#zero {grid-area: zero;}
+.btn {grid-area: nbr;}

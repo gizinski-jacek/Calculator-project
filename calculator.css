@@ -1,5 +1,7 @@
 body, body * {
     font-family: Arial, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
 }
 
 #mainContainer {
@@ -8,37 +10,69 @@ body, body * {
 }
 
 #calculator {
+    border: 8px solid rgb(0, 0, 0);
+    border-radius: 5%;
     width: 400px;
-    height: 500px;
+    height: 550px;
     display: grid;
     margin-top: 100px;
     grid-template-areas: 
     'display display display display'
-    'clear div mult sub'
+    'clear clear back back'
+    'div mul sub sub'
+    'nbr nbr nbr add'
     'nbr nbr nbr add'
     'nbr nbr nbr sum'
-    'nbr nbr nbr sum'
     'zero zero comma sum';
-    background-color: blueviolet;
+    background-color: rgb(220, 220, 220);
     padding: 5px;
+}
+
+#display {
+    grid-area: display;
+    font-size: 2em;
+    display: flex;
+    justify-content: right;
+    align-self: center;
+    align-items: center;
+    height: 50px;
+    padding: 5px 20px 5px 20px;
+    background-color: white;
+    border-radius: 50px;
+    border: 4px solid black;
+    margin: 10px;
 }
 
 button {
     margin: 5px;
     width: auto;
     height: auto;
+    color: white;
+    background-color: rgb(100, 100, 100);
+    border: 2px solid black;
+    border-radius: 10px;
 }
 
-#display {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-area: display;
-    min-height: 50px;
+button:active {
+    background-color: rgb(150, 150, 150);;
+    box-shadow: 0 0 15px red;
 }
-#clear {grid-area: clear;}
+
+.operators {
+    background-color: rgb(50, 150, 50);
+}
+
+#clear {
+    grid-area: clear;
+    background-color: rgb(150, 0, 0);
+}
+#backspace {
+    grid-area: back;
+    background-color: rgb(0, 100, 150);
+}
+
 #div {grid-area: div;}
-#mult {grid-area: mult;}
+#mul {grid-area: mul;}
 #sub {grid-area: sub;}
 #add {grid-area: add;}
 #sum {grid-area: sum;}

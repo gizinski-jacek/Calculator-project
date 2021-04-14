@@ -1,117 +1,93 @@
 const calculator = document.querySelector('#calculator');
 const display = document.querySelector('#display');
-const allButtons = document.querySelectorAll('button');
-const commaButton = document.querySelector('#comma');
+const numbersButtons = document.querySelectorAll('button.numbers');
+const operatorButtons = document.querySelectorAll('button.operators');
+// const equalButton = document.querySelector('#sum');
+const modifyButtons = document.querySelectorAll('button.modify');
+// const deleteButton = document.querySelector('#delete');
+const pointButton = document.querySelector('#comma');
 
-let firstValue = '';
-let secondValue = '';
-let operator = '';
-let secondValueTemp;
+let firstValue;
+let secondValue;
+let operator;
+let result;
 let operatorTemp;
+let error = 'Don\'t divide by zero!';
 
-
-
-allButtons.forEach((button) => {
+numbersButtons.forEach((button) => {
 	button.addEventListener('click', () => {
-		if (button.id == 'clear') {
-			clearCalc();
+		if (!(result == null) || (display.textContent == error)) {
+			result = null;
+			display.textContent = null;
 		}
-		if (button.id == 'backspace') {
-			if (display.textContent == "") {
-				firstValue = '0' + button.textContent;
-				display.textContent = firstValue;
-			} else {
-				firstValue += button.textContent;
-				display.textContent = firstValue;
-			}
-		}
-		if (button.id == 'comma') {
-			firstValue = display.textContent.slice(0, -1);
-			display.textContent = firstValue
-		}
+		display.textContent += button.textContent;
 		if (display.textContent.includes('.')) {
-			commaButton.disabled = true;
+			pointButton.disabled = true;
 		} else {
-			commaButton.disabled = false;
-		}
-		if (button.classList.contains('numbers')) {
-			if (typeof(firstValue) == 'string') {
-				firstValue += button.textContent;
-				display.textContent = firstValue;
-			} else {
-				secondValue += button.textContent;
-				display.textContent = secondValue;
-			}
-		}
-		if (button.classList.contains('operators')) {
-			if (!firstValue == '') {
-				firstValue = Number(firstValue);
-			}
-			if (operator == '') {
-				operator = button.textContent;
-			}
-			if (!typeof(firstValue) == 'number' && secondValue == '') {
-				operator = button.textContent;
-				display.textContent = firstValue;
-			}
-			if (!(secondValue == '') && (operator == ('+') || ('-') || ('*') || ('/') || ('='))) {
-				secondValue = Number(secondValue);
-			}
-
-			// Hold second value and operator in temporary variable to use in
-			// operate() in case user presses '=' again but dont clear them
-			// if (button.textContent == '=') {
-			// 	if (operatorTemp == undefined) {
-			// 		operatorTemp = operator;
-			// 	}
-			// 	operator == '=';
-			// 	if (secondValueTemp == undefined) {
-			// 		secondValueTemp = secondValue;
-			// 	}
-			// }
-
-			if ((typeof(secondValue) == 'number') || !(secondValueTemp == undefined)) {
-				if ((operator == '=') && (secondValue == '') && !(secondValueTemp == undefined) && !(operatorTemp == undefined)) {
-					firstValue = calculate(firstValue, operatorTemp, secondValueTemp);
-				} else {
-				firstValue = Number(calculate(firstValue, operator, secondValue).toFixed(5));
-				}
-				secondValue = '';
-				operator = button.textContent;
-				if ((firstValue) == 'Don\'t divide by zero') {
-					clearCalc();
-					display.textContent = 'Don\'t divide by zero';
-				} else {
-					display.textContent = firstValue;
-				}
-			}
-
-			// if (operator == undefined) {
-			// 	operator = button.textContent;
-			// 	display.textContent = firstValue + ' ' + operator;
-			// }
-			// else if (operator == ('+') || ('-') || ('*') || ('/')) {
-			// 	secondValue = parseInt(secondValue);
-			// }
-			// if (button.id == 'sum') {
-			// 	firstValue = operate(firstValue, operator, secondValue);
-			// 	secondValue = '';
-			// 	display.textContent = firstValue;
-			// }
+			pointButton.disabled = false;
 		}
 	})
 })
 
-function clearCalc() {
-	display.textContent = '';
-	firstValue = '';
-	secondValue = '';
-	operator = '';
-	secondValueTemp;
-	operatorTemp;
+operatorButtons.forEach((button) => {
+	button.addEventListener('click', () => {
+		if (firstValue == null) {
+			firstValue = display.textContent;
+		} else if (!(display.textContent == '') && secondValue == null) {
+			secondValue = display.textContent;
+		}
+		display.textContent = null;
+		if (!(firstValue == null) && !(secondValue == null)) {
+			if (firstValue == 0 || secondValue == 0) {
+				resetCalc();
+				display.textContent = error;
+			}
+			if (button.id == 'sum') {
+				if (operatorTemp == null) {
+					operatorTemp = operator;
+				}
+				result = Number(calculate(firstValue, operatorTemp, secondValue).toFixed(5));
+				display.textContent = result;
+			}
+			else {
+				result = Number(calculate(firstValue, operator, secondValue).toFixed(5));
+				firstValue = result;
+				secondValue = null;
+				operatorTemp = null;
+				display.textContent = result;
+			}
+		}
+		operator = button.textContent;
+	})
+})
+
+modifyButtons.forEach((button) => {
+	button.addEventListener('click', () => {
+		if (button.id == 'clear') {
+			resetCalc();
+		} 
+		if (button.id == 'delete') {
+			display.textContent = display.textContent.slice(0, -1);
+		}
+		if (!(display.textContent.includes('.'))) {
+			pointButton.disabled = false;
+		} else {
+			pointButton.disabled = true;
+		}
+	})
+})
+
+function resetCalc() {
+	display.textContent = null;
+	firstValue = null;
+	secondValue = null;
+	operator = null;
+	result = null;
 }
 
 function calculate(a, operator, b) {
+	a = Number(a);
+	b = Number(b);
     if (operator == '+') {
 		return add(a, b);
 	}
@@ -123,7 +99,7 @@ function calculate(a, operator, b) {
 	}
 	else if (operator == '/') {
 		if (a == 0 || b == 0) {
-			return 'Don\'t divide by zero'
+			return null;
 		} else {
 			return divide(a, b);
 		}

@@ -12,8 +12,8 @@ body, body * {
 #calculator {
     border: 8px solid rgb(0, 0, 0);
     border-radius: 5%;
-    width: 400px;
-    height: 550px;
+    width: 450px;
+    height: 600px;
     display: grid;
     margin-top: 100px;
     grid-template-areas: 
@@ -24,8 +24,8 @@ body, body * {
     'nbr nbr nbr add'
     'nbr nbr nbr sum'
     'zero zero comma sum';
-    background-color: rgb(220, 220, 220);
-    padding: 5px;
+    background-color: rgba(255, 149, 0, 0.3);
+    padding: 10px;
 }
 
 #display {
@@ -48,34 +48,65 @@ button {
     width: auto;
     height: auto;
     color: white;
-    background-color: rgb(100, 100, 100);
     border: 2px solid black;
     border-radius: 10px;
 }
 
-button:active {
-    background-color: rgb(150, 150, 150);;
-    box-shadow: 0 0 15px red;
+.numbers {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.numbers:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.numbers:active {
+    box-shadow: 0 0 10px red;
 }
 
 .operators {
     background-color: rgb(50, 150, 50);
 }
 
-#clear {
-    grid-area: clear;
-    background-color: rgb(150, 0, 0);
-}
-#backspace {
-    grid-area: back;
-    background-color: rgb(0, 100, 150);
+.operators:hover {
+    background-color: rgb(50, 150, 50, 0.8);
 }
 
+.operators:active {
+    box-shadow: 0 0 10px red;
+}
+
+#clear {
+    grid-area: clear;
+    background-color: rgb(200, 0, 0);
+}
+
+#clear:hover {
+    background-color: rgb(200, 0, 0, 0.75);
+}
+
+#clear:active {
+    box-shadow: 0 0 10px red;
+}
+
+#delete {
+    grid-area: back;
+    background-color: rgba(0, 100, 150, 0.8);
+}
+
+#delete:hover {
+    background-color: rgba(0, 100, 150, 0.7);
+}
+
+#delete:active {
+    box-shadow: 0 0 10px red;
+}
+
+.btn {grid-area: nbr;}
 #div {grid-area: div;}
 #mul {grid-area: mul;}
 #sub {grid-area: sub;}
 #add {grid-area: add;}
 #sum {grid-area: sum;}
-#comma {grid-area: comma;}
 #zero {grid-area: zero;}
-.btn {grid-area: nbr;}
+#comma {grid-area: comma;}
